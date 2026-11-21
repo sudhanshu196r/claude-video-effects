@@ -1,0 +1,13 @@
+{
+  "name": "claude-video-effects",
+  "owner": {
+    "name": "Sudhanshu Kumar"
+  },
+  "plugins": [
+    {
+      "name": "video-effects",
+      "source": "./",
+      "description": "15 one-command video effects for Claude Code, powered by ffmpeg."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "video-effects",
+  "version": "1.0.0",
+  "description": "15 one-command video effects for Claude Code: /effects documentary, split, neon-title, glass-widget, checklist, timeline, vhs and more. Powered by ffmpeg.",
+  "author": {
+    "name": "Sudhanshu Kumar"
+  },
+  "keywords": ["video", "ffmpeg", "effects", "reels", "shorts", "editing"],
+  "license": "MIT"
+}
