@@ -217,14 +217,20 @@ def fx_glass(c):
         f"geq=lum='if(gt(pow(max(0\\,max({radius}-X\\,X-({cw}-{radius})))\\,2)+"
         f"pow(max(0\\,max({radius}-Y\\,Y-({ch}-{radius})))\\,2)\\,{radius * radius})\\,0\\,255)'[m]"
     )
+    sh = max(1, t_size // 18)
+    shadow = dict(shadowcolor="black@0.45", shadowx=sh, shadowy=sh)
     title = c.dt(text, fontsize=t_size, fontcolor="white",
-                 x=f"{cx}+(({cw})-text_w)/2", y=f"{cy}+{int(ch * 0.18)}")
-    subt = c.dt(sub, fontsize=s_size, fontcolor="white@0.85",
-                x=f"{cx}+(({cw})-text_w)/2", y=f"{cy}+{int(ch * 0.62)}")
+                 x=f"{cx}+(({cw})-text_w)/2", y=f"{cy}+{int(ch * 0.20)}", **shadow)
+    subt = c.dt(sub, fontsize=s_size, fontcolor="white@0.92",
+                x=f"{cx}+(({cw})-text_w)/2", y=f"{cy}+{int(ch * 0.60)}", **shadow)
+    blur = max(12, int(c.s * 0.03))
+    edge = max(2, int(c.s * 0.003))
     return (
         f"[0:v]split[a][b];"
-        f"[b]crop={cw}:{ch}:{cx}:{cy},gblur=sigma=18,eq=brightness=0.12:saturation=0.8,"
-        f"drawbox=x=0:y=0:w=iw:h=ih:color=white@0.12:t=fill[glass];"
+        # smoked glass: heavy blur + dark tint keeps white text readable on light AND dark footage
+        f"[b]crop={cw}:{ch}:{cx}:{cy},gblur=sigma={blur},eq=saturation=0.85,"
+        f"drawbox=x=0:y=0:w=iw:h=ih:color=black@0.38:t=fill,"
+        f"drawbox=x=0:y=0:w=iw:h={edge}:color=white@0.35:t=fill[glass];"
         f"{mask};[glass][m]alphamerge[gm];"
         f"[a][gm]overlay={cx}:{cy}:enable='gte(t,0.3)',{title}:enable='gte(t,0.5)',"
         f"{subt}:enable='gte(t,0.8)'[v]"
